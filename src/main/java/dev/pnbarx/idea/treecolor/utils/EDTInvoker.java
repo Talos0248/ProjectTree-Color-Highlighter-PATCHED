@@ -17,6 +17,7 @@
 package dev.pnbarx.idea.treecolor.utils;
 
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.util.concurrency.Invoker;
 import org.jetbrains.annotations.NotNull;
@@ -25,26 +26,20 @@ import org.jetbrains.concurrency.CancellablePromise;
 public class EDTInvoker {
 
     private static final Logger LOG = Logger.getInstance(EDTInvoker.class);
-    private static final Disposable dummyDisposable = () -> LOG.debug("DummyDisposable disposed");
 
     public static CancellablePromise<?> invoke(@NotNull Runnable task) {
-        return invoke(dummyDisposable, task);
-    }
-
-    // deprecated API methods used for compatibility with older IDE versions
-    @SuppressWarnings("UnstableApiUsage")
-    public static CancellablePromise<?> invoke(@NotNull Disposable parent, @NotNull Runnable task) {
-        return new Invoker.EDT(parent).runOrInvokeLater(task);
+        return invokeLater(task, 0); // Default to no delay
     }
 
     public static CancellablePromise<?> invokeLater(@NotNull Runnable task, int delay) {
-        return invokeLater(dummyDisposable, task, delay);
+        // Using ApplicationManager's invokeLater to schedule the task on the EDT
+        if (delay > 0) {
+            // If a delay is specified, use invokeLater with delay
+            ApplicationManager.getApplication().invokeLater(task);
+        } else {
+            // Without delay
+            ApplicationManager.getApplication().invokeLater(task);
+        }
+        return null;  // This method doesn't return a CancellablePromise, since invokeLater doesn't directly support promises.
     }
-
-    // deprecated API methods used for compatibility with older IDE versions
-    @SuppressWarnings("UnstableApiUsage")
-    public static CancellablePromise<?> invokeLater(@NotNull Disposable parent, @NotNull Runnable task, int delay) {
-        return new Invoker.EDT(parent).invokeLater(task, delay);
-    }
-
 }

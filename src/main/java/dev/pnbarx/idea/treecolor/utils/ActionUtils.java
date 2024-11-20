@@ -19,21 +19,33 @@ package dev.pnbarx.idea.treecolor.utils;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.application.ReadAction;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.jetbrains.annotations.Nullable;
-
 
 public class ActionUtils {
 
     @Nullable
     public static VirtualFile[] getFiles(@Nullable AnActionEvent actionEvent) {
-        if (actionEvent == null) return null;
-        return actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+        if (actionEvent == null) {
+            return new VirtualFile[0]; // Return empty array if event is null
+        }
+
+        // Run the action off the EDT using ReadAction (which is safe to use for read operations)
+        return ReadAction.compute(() -> {
+            VirtualFile[] files = actionEvent.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+            if (files == null || files.length == 0) {
+                Logger.getInstance(ActionUtils.class).warn("No files selected in the context of the action event.");
+                return new VirtualFile[0]; // Return empty array if no files are selected
+            }
+            return files;
+        });
     }
+
 
     public static void setActionEnabled(AnActionEvent actionEvent, boolean enabled) {
         Presentation presentation = actionEvent.getPresentation();
         presentation.setEnabled(enabled);
     }
-
 }

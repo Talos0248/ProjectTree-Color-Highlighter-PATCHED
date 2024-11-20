@@ -1,19 +1,3 @@
-/*
- * Copyright (c) 2018-2020 Pavel Barykin.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package dev.pnbarx.idea.treecolor.actions;
 
 import com.intellij.openapi.actionSystem.*;
@@ -28,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-
 
 public class HighlightActionGroup extends ActionGroup {
 
@@ -67,26 +50,26 @@ public class HighlightActionGroup extends ActionGroup {
         boolean isHighlightedRecursively = projectStateService.files.isHighlightedRecursively(files);
 
         projectStateService.colors.getColorSettingsList().stream()
-            .filter(ColorSettings::isSetAndEnabled)
-            .forEach(colorSettings -> {
-                int colorId = colorSettings.getId();
+                .filter(ColorSettings::isSetAndEnabled)
+                .forEach(colorSettings -> {
+                    int colorId = colorSettings.getId();
 
-                ColoredCircleIcon.Mode iconMode = ColoredCircleIcon.Mode.DEFAULT;
-                if (isHighlighted && projectStateService.files.isHighlightedInColor(files, colorId)) {
-                    iconMode = ColoredCircleIcon.Mode.HIGHLIGHTED;
-                } else if (isHighlightedRecursively && projectStateService.files.isHighlightedInColorRecursively(files, colorId)) {
-                    iconMode = ColoredCircleIcon.Mode.HIGHLIGHTED_RECURSIVELY;
-                }
+                    ColoredCircleIcon.Mode iconMode = ColoredCircleIcon.Mode.DEFAULT;
+                    if (isHighlighted && projectStateService.files.isHighlightedInColor(files, colorId)) {
+                        iconMode = ColoredCircleIcon.Mode.HIGHLIGHTED;
+                    } else if (isHighlightedRecursively && projectStateService.files.isHighlightedInColorRecursively(files, colorId)) {
+                        iconMode = ColoredCircleIcon.Mode.HIGHLIGHTED_RECURSIVELY;
+                    }
 
-                HighlightAction action = new HighlightAction(
-                    StringUtils.getSafeLabelString(colorSettings.getName(), " ", 50),
-                    "Highlight in color #" + colorId,
-                    ColoredCircleIcon.getInstance(colorSettings.getColor(), iconMode)
-                );
-                action.setColorId(colorId);
+                    HighlightAction action = new HighlightAction(
+                            StringUtils.getSafeLabelString(colorSettings.getName(), " ", 50),
+                            "Highlight in color #" + colorId,
+                            ColoredCircleIcon.getInstance(colorSettings.getColor(), iconMode)
+                    );
+                    action.setColorId(colorId);
 
-                highlightActions.add(action);
-            });
+                    highlightActions.add(action);
+                });
 
         return highlightActions;
     }
@@ -95,4 +78,8 @@ public class HighlightActionGroup extends ActionGroup {
         return actionEvent != null && ActionUtils.getFiles(actionEvent) != null;
     }
 
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 }

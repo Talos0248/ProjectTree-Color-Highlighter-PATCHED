@@ -1,6 +1,4 @@
-# ProjectTree Color Highlighter PATCHED
-Patched to support IDEA 2024.3 and up :D
-
+# ProjectTree Color Highlighter
 ####  Plugin for Jetbrains IDEs. Highlights your project files and folders in colors.
 
 ![Highlight menu](images/highlight-menu-large.png)

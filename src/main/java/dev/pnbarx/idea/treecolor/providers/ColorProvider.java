@@ -56,7 +56,6 @@ public class ColorProvider implements EditorTabColorProvider, DumbAware {
     }
 
     @Nullable
-    @Override
     public Color getEditorTabColor(@NotNull Project project, @NotNull VirtualFile file, @Nullable EditorWindow editorWindow) {
         return getColor(project, file);
     }

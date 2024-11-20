@@ -18,7 +18,7 @@
     <id>dev.pnbarx.idea.treecolor</id>
     <name>ProjectTree Color Highlighter</name>
     <version>@version@</version>
-    <vendor url="https://github.com/pnbarx">Pavel Barykin</vendor>
+    <vendor url="https://github.com/pnbarx">Pavel Barykin + Talos0248</vendor>
 
     <description><![CDATA[
         Highlights your project files and folders in colors.
@@ -75,6 +75,32 @@
     <change-notes><![CDATA[
         <ul>
             <li>
+                1.3.0 (Unofficial Patch by Talos0248)
+                <ul>
+                    <li type="disc">
+                        Updated to support 2024.3
+                    </li>
+                    <li type="disc">
+                        Updated to use org.jetbrains.intellij.platform version 2.1.0
+                    </li>
+                    <li type="disc">
+                        Potential fix for EDT errors caused by Actions by using BGT instead
+                    </li>
+                    <li type="disc">
+                        Potential fix for Highlight Action Group not showing up in the Project View Popup Menu by Modifying plugin.xml and ActionUtils
+                    </li>
+                    <li type="disc">
+                        Use the new ColorPicker instead of deprecated ColorChooser
+                    </li>
+                </ul>
+            </li>
+            <li>
+                1.2.2 Support for 2021.1.* and above
+            </li>
+            <li>
+                1.2.1 Support for 2021.1
+            </li>
+            <li>
                 1.2.0
                 <ul>
                     <li type="disc">
@@ -122,7 +148,7 @@
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-    <idea-version since-build="183.2635.13"/>
+    <idea-version since-build="243"/>
     <incompatible-with>com.intellij.modules.rider</incompatible-with>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -136,9 +162,8 @@
                class="dev.pnbarx.idea.treecolor.actions.HighlightActionGroup"
                text="Highlight" description="Highlight your project files and folders"
                icon="/icons/highlight.png" popup="true">
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="before" relative-to-action="AddToFavorites"/>
-            <add-to-group group-id="EditorTabPopupMenuEx" anchor="before" relative-to-action="AddToFavorites"/>
+            <add-to-group group-id="EditorTabPopupMenuEx" anchor="after" relative-to-action="popup@ExpandableBookmarkContextMenu"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="popup@ExpandableBookmarkContextMenu"/>
         </group>
     </actions>
-
 </idea-plugin>
