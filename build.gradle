@@ -53,5 +53,4 @@ dependencies {
 
 patchPluginXml {
     sinceBuild = "200"
-    untilBuild = "999"         // Until Infinity and Beyond! (More likely until it breaks)
 }
