@@ -15,8 +15,8 @@
   -->
 
 <idea-plugin>
-    <id>dev.pnbarx.idea.treecolor</id>
-    <name>ProjectTree Color Highlighter</name>
+    <id>dev.pnbarxAndTalos0248.idea.treecolor</id>
+    <name>ProjectTree Color Highlighter PATCHED</name>
     <version>@version@</version>
     <vendor url="https://github.com/pnbarx">Pavel Barykin + Talos0248</vendor>
 
@@ -148,7 +148,7 @@
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-    <idea-version since-build="243"/>
+    <idea-version since-build="222"/>
     <incompatible-with>com.intellij.modules.rider</incompatible-with>
 
     <extensions defaultExtensionNs="com.intellij">

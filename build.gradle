@@ -52,5 +52,5 @@ dependencies {
 
 
 patchPluginXml {
-    sinceBuild = "200"
+    sinceBuild = "222"
 }
