@@ -104,7 +104,7 @@ public class ColorsDialog extends DialogWrapper {
 
     @NotNull
     @Override
-    protected Action[] createLeftSideActions() {
+    protected Action @NotNull [] createLeftSideActions() {
         return new Action[]{
             new AbstractAction("Manage Color Settings...") {
                 @Override
