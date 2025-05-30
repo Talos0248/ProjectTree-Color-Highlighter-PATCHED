@@ -15,6 +15,8 @@
   -->
 
 <idea-plugin>
+    <id>dev.pnbarx.idea.treecolor</id>
+    <name>ProjectTree Color Highlighter</name>
     <id>dev.pnbarxAndTalos0248.idea.treecolor</id>
     <name>ProjectTree Color Highlighter PATCHED</name>
     <version>@version@</version>
@@ -74,6 +76,9 @@
 
     <change-notes><![CDATA[
         <ul>
+            <li>
+            1.3.1 (Unofficial Patch by Talos0248) Removed Upper Build Limit
+            </li>
             <li>
                 1.3.0 (Unofficial Patch by Talos0248)
                 <ul>
@@ -162,8 +167,11 @@
                class="dev.pnbarx.idea.treecolor.actions.HighlightActionGroup"
                text="Highlight" description="Highlight your project files and folders"
                icon="/icons/highlight.png" popup="true">
-            <add-to-group group-id="EditorTabPopupMenuEx" anchor="after" relative-to-action="popup@ExpandableBookmarkContextMenu"/>
-            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="popup@ExpandableBookmarkContextMenu"/>
+            <add-to-group group-id="EditorTabPopupMenuEx" anchor="after"
+                          relative-to-action="popup@ExpandableBookmarkContextMenu"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after"
+                          relative-to-action="popup@ExpandableBookmarkContextMenu"/>
         </group>
     </actions>
 </idea-plugin>
+
